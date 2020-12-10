@@ -17,7 +17,7 @@ spec:
       imagePullSecrets:
       - name: "docker-regsitry-auth"
       containers:
-      - image: harbor.wang.com/wang/nginx:wang
+      - image: harbor.wang.com/wang/nginx:wang1
         name: wang-nginx
         imagePullPolicy: Always
         ports:
