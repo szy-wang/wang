@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wang
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      project: wang
+      app: nginx
+  template:
+    metadata:
+      labels:
+        project: wang
+        app: nginx
+    spec:
+      imagePullSecrets:
+      - name: "docker-regsitry-auth"
+      containers:
+      - image: harbor.wang.com/wang/nginx:wang
+        name: wang-nginx
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: nginx-port
+          protocol: TCP
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: wang
+  name: wang
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30018
+  selector:
+    app: nginx
+  type: NodePort
